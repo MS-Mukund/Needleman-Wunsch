@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat May  7 10:49:00 2022
+# Make data base, printed on Sat May  7 17:42:32 2022
 
 # Variables
 
@@ -51,9 +51,9 @@ SNAP_DATA = /var/snap/code/95
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en-gb","availableLanguages":{},"_languagePackSupport":true}
 # environment
-JOURNAL_STREAM = 8:63510
-# makefile (from 'Makefile', line 5)
-CFLAGS := -g -O3 -axCORE-AVX2 -qopenmp
+JOURNAL_STREAM = 8:53930
+# makefile (from 'Makefile', line 26)
+CFLAGS := -O3 
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # environment
@@ -64,8 +64,8 @@ SNAP_ARCH = amd64
 MAKEFILE_LIST :=  Makefile
 # automatic
 @F = $(notdir $@)
-# makefile (from 'Makefile', line 30)
-OBJECT_FILES := helper.o optimised.o
+# makefile (from 'Makefile', line 35)
+OBJECT_FILES := helper.o without_parallelisation.o
 # environment
 GIO_LAUNCHED_DESKTOP_FILE = /var/lib/snapd/desktop/applications/code_code.desktop
 # environment
@@ -79,11 +79,11 @@ VSCODE_VERBOSE_LOGGING = true
 # environment
 _ = /snap/code/95/usr/share/code/code
 # environment
-MANAGERPID = 2946
+MANAGERPID = 3291
 # environment
 P9K_SSH = 0
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-532a20d3-629f-4b35-94c0-d93a5aadf005.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-163018dc-9fe1-45e3-9ce2-821406baf3ce.sock
 # environment
 VSCODE_CWD = /home/mekasaimukund
 # environment
@@ -97,7 +97,7 @@ GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
-SESSION_MANAGER = local/mekasaimukund-IdeaPad-L340-15IRH-Gaming:@/tmp/.ICE-unix/3161,unix/mekasaimukund-IdeaPad-L340-15IRH-Gaming:/tmp/.ICE-unix/3161
+SESSION_MANAGER = local/mekasaimukund-IdeaPad-L340-15IRH-Gaming:@/tmp/.ICE-unix/3513,unix/mekasaimukund-IdeaPad-L340-15IRH-Gaming:/tmp/.ICE-unix/3513
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -115,7 +115,7 @@ DISABLE_WAYLAND = 1
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = 061a571b8276407faa1e74d2da56cb98
+INVOCATION_ID = e0e2a55f4d5d435793eedb9858990fd5
 # environment
 GDK_PIXBUF_MODULEDIR = /snap/code/95/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
 # default
@@ -129,7 +129,7 @@ XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 4942
+GIO_LAUNCHED_DESKTOP_FILE_PID = 6031
 # automatic
 %F = $(notdir $%)
 # environment
@@ -143,7 +143,7 @@ PWD = /home/mekasaimukund/Needleman-Wunsch
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 3122
+SSH_AGENT_PID = 3468
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
@@ -190,8 +190,8 @@ QT_IM_MODULE = ibus
 SNAP_USER_DATA = /home/mekasaimukund/snap/code/95
 # environment
 SHLVL = 0
-# makefile (from 'Makefile', line 4)
-CC := icc
+# makefile (from 'Makefile', line 24)
+CC := gcc 
 # environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # default
@@ -201,7 +201,7 @@ USER = mekasaimukund
 # environment
 SNAP_REVISION = 95
 # makefile
-.DEFAULT_GOAL := opti
+.DEFAULT_GOAL := wparl
 # environment
 XDG_CURRENT_DESKTOP = Unity
 # environment
@@ -269,7 +269,7 @@ GJS_DEBUG_OUTPUT = stderr
 # environment
 LANG = C
 # environment
-VSCODE_PID = 5021
+VSCODE_PID = 6083
 # variable set hash-table stats:
 # Load=129/1024=13%, Rehash=0, Collisions=18/155=12%
 
@@ -279,9 +279,10 @@ VSCODE_PID = 5021
 
 # Directories
 
-# . (device 66309, inode 574210): 39 files, no impossibilities.
+# . (device 66309, inode 574210): 79 files, no impossibilities.
 
-# 39 files, no impossibilities in 1 directories.
+ 
+# 79 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -307,9 +308,8 @@ all:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-07 10:33:02.475586621
+#  Last modified 2022-05-07 14:11:07.736859233
 #  File has been updated.
- 
 #  Successfully updated.
 
 helper.o: helper.c
@@ -370,12 +370,12 @@ optimised.c:
 #  Modification time never checked.
 #  File has not been updated.
 
-opti: helper.o optimised.o
+wparl: helper.o without_parallelisation.o
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 32):
-	$(CC) $(CFLAGS) $(OBJECT_FILES) -o opti
+#  recipe to execute (from 'Makefile', line 37):
+	$(CC) $(CFLAGS) $(OBJECT_FILES) -o wparl
 
 # files hash-table stats:
 # Load=14/1024=1%, Rehash=0, Collisions=0/32=0%
@@ -385,12 +385,12 @@ opti: helper.o optimised.o
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 47 / storage = 634 B / avg = 13 B
-# current buf: size = 8162 B / used = 634 B / count = 47 / avg = 13 B
+# strcache buffers: 1 (0) / strings = 89 / storage = 1541 B / avg = 17 B
+# current buf: size = 8162 B / used = 1541 B / count = 89 / avg = 17 B
 
-# strcache performance: lookups = 66 / hit rate = 28%
+# strcache performance: lookups = 106 / hit rate = 16%
 # hash-table stats:
-# Load=47/8192=1%, Rehash=0, Collisions=1/66=2%
-# Finished Make data base on Sat May  7 10:49:00 2022
+# Load=89/8192=1%, Rehash=0, Collisions=1/106=1%
+# Finished Make data base on Sat May  7 17:42:32 2022
 
  

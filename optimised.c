@@ -31,7 +31,7 @@ int main( int argc, char *argv[] )
     {
         seq_len = atoi(argv[1]);
     }
-    int tileSz = 256;
+    int tileSz = 128;
     
     dnaseq1 = (char *)malloc(seq_len * sizeof(char));
     dnaseq2 = (char *)malloc(seq_len * sizeof(char));
@@ -69,8 +69,9 @@ int main( int argc, char *argv[] )
     backtrack(scoringMatrix, seq_len, bases, gap_penalty, dnaseq1, dnaseq2);
 
     double gflops = 3 * (double)seq_len * (double)seq_len / calctime / 1e9;
-    printf("%lf\n", gflops);
+    // printf("%lf\n", gflops);
 
+    printf("%lf\n", calctime*1000);
     // free everything
     free(dnaseq1);
     free(dnaseq2);
@@ -227,7 +228,7 @@ void NeedlemanWunschTiled(int **scoringMatrix, int n, char *bases, int gap_penal
                 }
                 // k1+k2 = i+j+sum k1 < rowupperlimit i+j+sum - k1 >= j  , k1 <= i+sum
 
-                #pragma omp parallel for
+                // #pragma omp parallel for
                 for( int k1 = tmp1;k1 <= min(i+sum,rowupperlimit-1);k1++)
                 {
                     int k2 = i+j+sum-k1;

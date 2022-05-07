@@ -66,9 +66,9 @@ int main(int argc, char *argv[])
     // double mem_bw = (double)seq_len * (double)seq_len * (double)sizeof(int);
     double gflops = (3 * seq_len * seq_len / calctime) * 1.0e-9;
 
-    // printf("%f\n", calctime * 1000);
+    printf("%lf\n", calctime * 1000);
     // printf("Memory Bandwidth (in GBytes/s): %f\n", mem_bw);
-    printf("%lf\n", gflops);
+    // printf("%lf\n", gflops);
 
     // free everything
     free(dnaseq1);

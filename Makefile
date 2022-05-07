@@ -1,40 +1,40 @@
 # indicate how the object files are to be created
 
 #icc
-CC         := icc
-CFLAGS     := -g -O3 -axCORE-AVX2 -qopenmp
+# CC         := icc
+# CFLAGS     := -O3 -axCORE-AVX2 -qopenmp
 # CFLAGS     := -O3 -axCORE-AVX2
 
 #gcc O0
 # CC         := gcc 
-# CFLAGS     := -O0 -qopenmp
+# CFLAGS     := -O0 -fopenmp
 # CFLAGS     := -O0 
 
 #gcc O1
 # CC         := gcc 
-# CFLAGS     := -O1 -qopenmp
+# CFLAGS     := -O1 -fopenmp
 # CFLAGS     := -O1 
 
 #gcc O2
 # CC         := gcc 
-# CFLAGS     := -O2 -qopenmp
+# CFLAGS     := -O2 -fopenmp
 # CFLAGS     := -O2 
 
 #gcc O3
-# CC         := gcc 
+CC         := gcc 
 # CFLAGS     := -O3 -fopenmp
-# CFLAGS     := -O3 
+CFLAGS     := -O3 
 
 NRUNS = 10
 
-OBJECT_FILES := helper.o optimised.o
-opti: $(OBJECT_FILES)
-	$(CC) $(CFLAGS) $(OBJECT_FILES) -o opti
+# OBJECT_FILES := helper.o optimised.o
+# opti: $(OBJECT_FILES)
+# $(CC) $(CFLAGS) $(OBJECT_FILES) -o opti
 
 # anti-diagonal, without tiling
-# OBJECT_FILES := helper.o without_parallelisation.o
-# wparl: $(OBJECT_FILES)
-# $(CC) $(CFLAGS) $(OBJECT_FILES) -o wparl
+OBJECT_FILES := helper.o without_parallelisation.o
+wparl: $(OBJECT_FILES)
+	$(CC) $(CFLAGS) $(OBJECT_FILES) -o wparl
 
 #naive implementation
 # OBJECT_FILES := helper.o naive.o 

@@ -64,11 +64,11 @@ int main( int argc, char *argv[] )
         // printf("\n");
     // }
 
-    double gflops = 3 * seq_len * seq_len / calctime / 1.0e9; 
+    // double gflops = 3 * seq_len * seq_len / calctime / 1.0e9; 
 
-    // printf("Time (in milli-secs) %f\n", calctime * 1000);
+    printf("%lf\n", calctime * 1000);
     // printf("Memory Bandwidth (in GBytes/s): %f\n", mem_bw);
-    printf("%lf\n", gflops);
+    // printf("%lf\n", gflops);
 
     // free everything
     free(dnaseq1);

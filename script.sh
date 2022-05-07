@@ -1,9 +1,9 @@
 make clean;
 make opti; 
-for i in {100..5000..100}; 
+for i in {1000..30000..1000}; 
 do 
-    for j in {1..10};
-    do 
-        ./opti ${i};
-    done
+    # for j in {1..3};
+    # do 
+    ./opti ${i};
+    # done
 done

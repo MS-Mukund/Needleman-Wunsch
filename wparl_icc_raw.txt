@@ -1,6 +1,0 @@
-rm *.o 
-gcc  -O3  -c helper.c
-gcc  -O3  -c without_parallelisation.c
-gcc  -O3  helper.o without_parallelisation.o -o wparl
-0.154269
-0.148619
