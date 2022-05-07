@@ -17,7 +17,7 @@ void NeedlemanWunsch(int **scoringMatrix, int n, char *bases, int gap_penalty, c
 // A -1 -1  2  1
 // G -1 -1  1  2
 
-int main()
+int main( int argc, char *argv[] ) 
 {
     struct timeval calc;
     double calctime;
@@ -25,6 +25,11 @@ int main()
 
     char *dnaseq1, *dnaseq2;
     int seq_len = 5000;
+    if ( argc > 1)
+    {
+        seq_len = atoi(argv[1]);
+    }
+
     dnaseq1 = (char *)malloc(seq_len * sizeof(char));
     dnaseq2 = (char *)malloc(seq_len * sizeof(char));
     char bases[] = {'C', 'T', 'A', 'G'};
@@ -49,7 +54,7 @@ int main()
     NeedlemanWunsch(scoringMatrix, seq_len, bases, gap_penalty, dnaseq1, dnaseq2);
     calctime = tock(&calc);
     
-    printf("%s\n%s\n", dnaseq1, dnaseq2);
+    // printf("%s\n%s\n", dnaseq1, dnaseq2);
     // for (int i = 0; i < seq_len; i++)
     // {
         // for (int j = 0; j < seq_len; j++)
@@ -59,12 +64,11 @@ int main()
         // printf("\n");
     // }
 
-    double mem_bw = (double)seq_len * (double)seq_len * (double)sizeof(int);
-    double gflops = (double)seq_len * (double)seq_len * (double)2 / calctime;
+    double gflops = 3 * seq_len * seq_len / calctime / 1.0e9; 
 
-    printf("Time (in milli-secs) %f\n", calctime * 1000);
-    printf("Memory Bandwidth (in GBytes/s): %f\n", mem_bw);
-    printf("Compute Throughput (in GFlops/s): %f\n", gflops / calctime);
+    // printf("Time (in milli-secs) %f\n", calctime * 1000);
+    // printf("Memory Bandwidth (in GBytes/s): %f\n", mem_bw);
+    printf("%lf\n", gflops);
 
     // free everything
     free(dnaseq1);
@@ -81,19 +85,22 @@ int main()
 // Needleman-Wunsch algorithm for global alignment
 void NeedlemanWunsch(int **scoringMatrix, int n, char *bases, int gap_penalty, char *dnaseq1, char *dnaseq2)
 {
-    for (int i = 0; i < n; i++)
+    for (int i = 1; i < n; i++)
     {
+        // #pragma omp parallel for
         for (int j = 1; j < i; j++)
         {
-            // printf("j: %d, k: %d\n",j, i-j);
+            // printf("first j: %d, k: %d\n", j, i-j);
             scoringMatrix[j][i - j] = max(scoringMatrix[j - 1][i - j - 1] + substitution_matrix[ ctag(dnaseq1[i]) ][ ctag(dnaseq2[j]) ], // mismatch
                                           scoringMatrix[j - 1][i - j] + gap_penalty, scoringMatrix[j][i - j - 1] + gap_penalty);   // gap penalties
         }
     }
     for (int i = 1; i < n; i++)
     {
+        // #pragma omp parallel for
         for (int j = 0; j < n - i; j++)
         {
+            // printf("second j: %d, k: %d\n", n - 1 - j, i+j);
             scoringMatrix[n - 1 - j][j + i] = max(scoringMatrix[n - 2 - j][i + j - 1] + substitution_matrix[ ctag(dnaseq1[i]) ][ ctag(dnaseq2[j]) ],
                                                   scoringMatrix[n - 2 - j][i + j] + gap_penalty, scoringMatrix[n - 1 - j][i + j - 1] + gap_penalty);
         }

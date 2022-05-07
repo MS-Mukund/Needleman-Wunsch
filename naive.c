@@ -6,6 +6,7 @@
 #include <omp.h>
 #include "helper.h"
 
+#define DEFAULT_LEN 5000
 // declarations
 int substitution_matrix[][4] = {{2, 1, -1, -1}, {1, 2, -1, -1}, {-1, -1, 2, 1}, {-1, -1, 1, 2}};
 void NeedlemanWunsch(int **scoringMatrix, int n, char *bases, int gap_penalty, char *dna, char *dna_align);
@@ -17,14 +18,17 @@ void NeedlemanWunsch(int **scoringMatrix, int n, char *bases, int gap_penalty, c
 // A -1 -1  2  1
 // G -1 -1  1  2
 
-int main()
+int main(int argc, char *argv[])
 {
     struct timeval calc;
     double calctime;
     srand((unsigned)time(NULL));
 
     char *dnaseq1, *dnaseq2;
-    int seq_len = 5000;
+    int seq_len = DEFAULT_LEN;
+    if (argc > 1)
+        seq_len = atoi(argv[1]);
+
     dnaseq1 = (char *)malloc(seq_len * sizeof(char));
     dnaseq2 = (char *)malloc(seq_len * sizeof(char));
     char bases[] = {'C', 'T', 'A', 'G'};
@@ -49,7 +53,7 @@ int main()
     NeedlemanWunsch(scoringMatrix, seq_len, bases, gap_penalty, dnaseq1, dnaseq2);
     calctime = tock(&calc);
     
-    printf("%s\n%s\n", dnaseq1, dnaseq2);
+    // printf("%s\n%s\n", dnaseq1, dnaseq2);
     // for (int i = 0; i < seq_len; i++)
     // {
         // for (int j = 0; j < seq_len; j++)
@@ -59,12 +63,12 @@ int main()
         // printf("\n");
     // }
 
-    double mem_bw = (double)seq_len * (double)seq_len * (double)sizeof(int);
-    double gflops = (double)seq_len * (double)seq_len * (double)2 / calctime;
+    // double mem_bw = (double)seq_len * (double)seq_len * (double)sizeof(int);
+    double gflops = (3 * seq_len * seq_len / calctime) * 1.0e-9;
 
-    printf("Time (in milli-secs) %f\n", calctime * 1000);
-    printf("Memory Bandwidth (in GBytes/s): %f\n", mem_bw);
-    printf("Compute Throughput (in GFlops/s): %f\n", gflops / calctime);
+    // printf("%f\n", calctime * 1000);
+    // printf("Memory Bandwidth (in GBytes/s): %f\n", mem_bw);
+    printf("%lf\n", gflops);
 
     // free everything
     free(dnaseq1);

@@ -48,3 +48,13 @@ int ctag(char c)
             return 3;
     }
 }
+
+int min(int a, int b)
+{
+    return (a < b ? a : b);
+}
+
+int max2(int a, int b)
+{
+    return (a > b ? a : b);
+}
